@@ -45,19 +45,31 @@ export default function Home() {
           title: newTask,
           completed: false
         }
-      ])
+      ]);
+      setNewTask(""); 
     }
   }
+
+const EditTask  = (id: number, title: string) => {
+    setTask(tasks.map(task => 
+      task.id === id ? {...task, title: title} : task
+    ))
+  }
+
+const RemoveTask = (id: number) => {
+  setTask(tasks.filter(task => task.id !== id));
+}
 
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <h2 className="text-xl font-bold w-full text-center">TODO LIST</h2>
-        <div className="flex items-center">
+        <div className="flex items-center w-full">
           <input
             type="text"
             placeholder="Enter your task here"
-            className="border border-white p-2 bg-transparent text-white"
+            className="border border-white p-2 bg-transparent text-white w-full"
+	    value={newTask}
             onChange={(e) => setNewTask(e.target.value)}>
           </input>
           <button
@@ -66,7 +78,7 @@ export default function Home() {
             Add
           </button>
         </div>
-        <TodoList tasks = { tasks } ToggleTask = { ToggleTask } /> 
+        <TodoList tasks = { tasks } ToggleTask = { ToggleTask } EditTask = {EditTask} RemoveTask = {RemoveTask} /> 
       </main>
     </div>
   );
